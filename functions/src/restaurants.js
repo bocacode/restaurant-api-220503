@@ -1,8 +1,10 @@
 import connectDb from "../connectDb.js";
 
+const collectionName = 'restaurants';
+
 export function getAllRestaurants(req, res) {
   const db = connectDb();
-  db.collection("restaurants").get()
+  db.collection(collectionName).get()
     .then(snapshot => {
       const restaurantArray = snapshot.docs.map(doc => {
         let restaurant = doc.data();
@@ -23,7 +25,7 @@ export function getRestaurantById(req, res) {
     return;
   }
   const db = connectDb();
-  db.collection("restaurants").doc(restaurantId).get()
+  db.collection(collectionName).doc(restaurantId).get()
     .then(doc => {
       let restaurant = doc.data();
       restaurant.id = doc.id;
@@ -40,7 +42,7 @@ export function addRestaurant(req, res) {
     return;
   }
   const db = connectDb();
-  db.collection('restaurants').add(req.body)
+  db.collection(collectionName).add(req.body)
     .then(doc => {
       res.send('Restaurant created ' + doc.id)
     })
